@@ -1,6 +1,7 @@
 package com.examp.travel.framework.util;
 
 import com.examp.travel.framework.entity.ConstantsEnum;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 
@@ -19,6 +20,24 @@ import java.util.UUID;
  **/
 public class FileUtil {
 
+
+    public String uploadMethod(MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                BASE64Encoder encoder = new BASE64Encoder();
+                // 通过base64来转化图片
+                String data = encoder.encode(file.getBytes());
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+
     //图片转化成base64字符串
     public static String getImageString(MultipartFile multipartFile) {
         //1.判断文件是否存在
@@ -27,6 +46,7 @@ public class FileUtil {
         }
         byte[] data = null;
         try {
+
             InputStream inputStream = multipartFile.getInputStream();
             data = new byte[inputStream.available()];
             inputStream.read(data);

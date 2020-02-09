@@ -61,13 +61,14 @@ public class PictureController {
             if (!FileUtil.isImageFile(file.getOriginalFilename())) {
                 return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9004.getCode(),StatusEnum.SYSTEM_ERROR_9004.getData());
             }
+            /**转换成base64 保存字符串**/
+            String base64String = FileUtil.getImageString(file);
+
             /**直接保存文件**/
             String uploadPath = FileUtil.fileUpload(type,entityId,file);
             if (uploadPath == null) {
                 System.out.println("直接保存文件失败");
             }
-            /**转换成base64 保存字符串**/
-            String base64String = FileUtil.getImageString(file);
             //实例化 picture 写入数据，保存
             Picture picture = new Picture();
             picture.setType(type);
@@ -80,6 +81,38 @@ public class PictureController {
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), StatusEnum.RESPONSE_OK.getData());
     }
 
+
+    @PostMapping(value = "/picture2")
+    public Response add3(@RequestParam("file") MultipartFile file,
+                         @RequestParam("entityId") Integer entityId,
+                         @RequestParam("type") String type){
+
+        if (Objects.isNull(file)) {
+            return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
+        }
+
+        if (!FileUtil.isImageFile(file.getOriginalFilename())) {
+            return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9004.getCode(),StatusEnum.SYSTEM_ERROR_9004.getData());
+        }
+
+        /**转换成base64 保存字符串**/
+        String base64String = FileUtil.getImageString(file);
+        /**直接保存文件**/
+        String uploadPath = FileUtil.fileUpload(type,entityId,file);
+        if (uploadPath == null) {
+            System.out.println("直接保存文件失败");
+        }
+
+        //实例化 picture 写入数据，保存
+        Picture picture = new Picture();
+        picture.setType(type);
+        picture.setEntityId(entityId);
+        picture.setPath(uploadPath);
+        picture.setPictureBase64(base64String);
+        pictureService.add(picture);
+
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), StatusEnum.RESPONSE_OK.getData());
+    }
 
     /**删除**/
     @DeleteMapping(value = "/{pictureId}")

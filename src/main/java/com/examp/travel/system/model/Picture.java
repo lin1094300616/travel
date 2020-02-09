@@ -13,7 +13,7 @@ public class Picture {
     /**
      * 图片ID
      */
-    private Integer pictureId;
+    private Long pictureId;
 
     /**
      * 模块类别
@@ -35,11 +35,11 @@ public class Picture {
      */
     private String path;
 
-    public Integer getPictureId() {
+    public Long getPictureId() {
         return pictureId;
     }
 
-    public void setPictureId(Integer pictureId) {
+    public void setPictureId(Long pictureId) {
         this.pictureId = pictureId;
     }
 

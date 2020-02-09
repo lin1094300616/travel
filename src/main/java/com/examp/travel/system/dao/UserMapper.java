@@ -13,9 +13,9 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    @Select("select user_id,user_name, name as name, phone, email " +
+    @Select("select user_id,user_name, name as name, phone, email, role_name " +
             "from user " +
-            "where user_name = #{userName}")
+            "where  user_name = #{userName}")
     User findByUserName(@Param("userName") String userName);
 
     @Select("select user_id,user_name, name as name, phone, email, role_name " +

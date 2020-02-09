@@ -2,12 +2,14 @@ package com.examp.travel.system.service.imp;
 
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
+import com.examp.travel.framework.util.FileUtil;
 import com.examp.travel.system.dao.PictureMapper;
 import com.examp.travel.system.model.Picture;
 import com.examp.travel.system.service.IPictureService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -48,10 +50,12 @@ public class PictureServiceImpl  implements IPictureService {
 
     @Override
     public Response delete(Integer pictureId) {
-        if (pictureMapper.findById(pictureId) == null) {
+        Picture picture = pictureMapper.findById(pictureId);
+        if (picture == null) {
             return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
         if(pictureMapper.delete(pictureId) == 1) {
+            FileUtil.deleteDir(new File(picture.getPath()));
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
         }
         return  Response.factoryResponse(StatusEnum.RET_DELETE_FAIL.getCode(),StatusEnum.RET_DELETE_FAIL.getData());
