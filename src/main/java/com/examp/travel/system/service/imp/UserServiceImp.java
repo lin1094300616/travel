@@ -54,8 +54,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public Response update(User user) {
-        if (userMapper.findByUserName(user.getUserName()) != null) {
-            return  Response.factoryResponse(StatusEnum.RET_INSERT_EXIST.getCode(),StatusEnum.RET_INSERT_EXIST.getData());
+        User userByUserName = userMapper.findByUserName(user.getUserName());
+        if ((userByUserName != null) && (!userByUserName.getUserId().equals(user.getUserId()))) {
+            return  Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());
         }
         if(userMapper.update(user) == 1) {
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());

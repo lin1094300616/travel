@@ -14,7 +14,7 @@ public class Scenery  {
     /**
      * 景点ID
      */
-    private Integer sceneryId;
+    private Long sceneryId;
 
     /**
      * 景点名称
@@ -29,7 +29,7 @@ public class Scenery  {
     /**
      * 级别
      */
-    private Integer level;
+    private String level;
 
     /**
      * 景点类型
@@ -44,13 +44,34 @@ public class Scenery  {
     /**
      * 关联图片id
      */
-    private Integer pictureId;
+//    private Integer pictureId;
 
-    public Integer getSceneryId() {
+    /**
+     * 关联图片id
+     */
+    private Long ticketPrice;
+
+    /**
+     * 关联图片id
+     */
+    private String openingTime;
+
+    /**
+     * 关联图片id
+     */
+    private String phone;
+
+    /**
+     * 关联图片id
+     */
+    private String address;
+
+
+    public Long getSceneryId() {
         return sceneryId;
     }
 
-    public void setSceneryId(Integer sceneryId) {
+    public void setSceneryId(Long sceneryId) {
         this.sceneryId = sceneryId;
     }
 
@@ -70,11 +91,11 @@ public class Scenery  {
         this.location = location;
     }
 
-    public Integer getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(Integer level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
@@ -94,11 +115,35 @@ public class Scenery  {
         this.introduce = introduce;
     }
 
-    public Integer getPictureId() {
-        return pictureId;
+    public Long getTicketPrice() {
+        return ticketPrice;
     }
 
-    public void setPictureId(Integer pictureId) {
-        this.pictureId = pictureId;
+    public void setTicketPrice(Long ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
+    public String getOpeningTime() {
+        return openingTime;
+    }
+
+    public void setOpeningTime(String openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

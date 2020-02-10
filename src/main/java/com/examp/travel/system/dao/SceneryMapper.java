@@ -18,29 +18,30 @@ import java.util.List;
 @Mapper
 public interface SceneryMapper extends BaseMapper<Scenery> {
 
-    @Select("select scenery_id, name, location, level, type, introduce, pictureId  " +
-            "from scenery" +
+    @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address " +
+            "from scenery " +
             "where name = #{name}")
-    User findByName(@Param("name") String name);
+    Scenery findByName(@Param("name") String name);
 
-    @Insert("INSERT INTO `scenery` VALUES (#{sceneryId}, #{name}, #{location}, #{level}, #{type}, #{introduce}, #{pictureId})")
+    @Insert("INSERT INTO `scenery` VALUES (#{sceneryId}, #{name}, #{location}, #{level}, #{type}, #{introduce}, #{ticketPrice}, #{openingTime}, #{phone}, #{address})")
     @Options(useGeneratedKeys = true, keyColumn = "sceneryId", keyProperty = "sceneryId")
     int add(Scenery scenery);
 
-    @Update("update scenery set name = #{name},location = #{location}," +
-            "level = #{level}, type = #{type}, introduce = #{introduce} ,pictureId = #{pictureId} " +
+    @Update("update scenery set name = #{name},location = #{location},level = #{level}, " +
+            "type = #{type}, introduce = #{introduce} , ticket_price = #{ticketPrice}, " +
+            "opening_time = #{openingTime},phone = #{phone},address = #{address}" +
             "where scenery_id = #{sceneryId}")
     int update(Scenery scenery);
 
     @Delete("delete from scenery where scenery_id = #{scenery_id}")
     int delete(Long sceneryId);
 
-    @Select("select scenery_id, name, location, level, type, introduce, pictureId " +
+    @Select("select scenery_id, name, location, level, type, introduce, ticketPrice, openingTime, phone, address" +
             "from scenery " +
             "where scenery_id = #{scenery_id}")
     Scenery findScenery(@Param("scenery_id") Long sceneryId);
 
-    @Select("select scenery_id, name, location, level, type, introduce, pictureId  " +
+    @Select("select scenery_id,name,location, level, type, introduce, ticket_price, opening_time, phone, address " +
             "from scenery")
     List<Scenery> findSceneryList();
 
