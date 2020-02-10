@@ -30,6 +30,7 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/picture")
+@CrossOrigin
 public class PictureController {
 
     @Autowired

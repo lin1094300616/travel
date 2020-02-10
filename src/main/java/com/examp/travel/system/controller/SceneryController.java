@@ -24,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/scenery")
+@CrossOrigin
 public class SceneryController {
 
     @Autowired

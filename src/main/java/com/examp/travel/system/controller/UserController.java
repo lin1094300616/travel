@@ -23,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
 
     private static final String LOGIN_OK = "登录成功！";
