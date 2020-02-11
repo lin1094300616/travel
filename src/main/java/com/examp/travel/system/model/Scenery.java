@@ -15,7 +15,6 @@ public class Scenery  {
      * 景点ID
      */
     private Long sceneryId;
-
     /**
      * 景点名称
      */
@@ -25,46 +24,43 @@ public class Scenery  {
      * 所在地
      */
     private String location;
-
     /**
      * 级别
      */
     private String level;
-
     /**
      * 景点类型
      */
     private String type;
-
     /**
      * 介绍
      */
     private String introduce;
-
-    /**
-     * 关联图片id
-     */
-//    private Integer pictureId;
-
     /**
      * 关联图片id
      */
     private Long ticketPrice;
-
     /**
      * 关联图片id
      */
     private String openingTime;
-
     /**
      * 关联图片id
      */
     private String phone;
-
     /**
      * 关联图片id
      */
     private String address;
+    /**
+     * 交通
+     */
+    private String traffic;
+    /**
+     * 门票
+     */
+    private String ticket;
+
 
 
     public Long getSceneryId() {
@@ -145,5 +141,21 @@ public class Scenery  {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTraffic() {
+        return traffic;
+    }
+
+    public void setTraffic(String traffic) {
+        this.traffic = traffic;
+    }
+
+    public String getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
     }
 }
