@@ -1,6 +1,9 @@
 package com.examp.travel.system.model;
 
 import com.examp.travel.framework.entity.PermissionConstants;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -8,6 +11,9 @@ import com.examp.travel.framework.entity.PermissionConstants;
  * @author MSI
  * @version 1.0
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class User {
     /**用户编号**/
     private Long userId;

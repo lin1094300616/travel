@@ -28,4 +28,5 @@ public class CommonConfiguration {
         pageHelper.setProperties(p);
         return pageHelper;
     }
+
 }

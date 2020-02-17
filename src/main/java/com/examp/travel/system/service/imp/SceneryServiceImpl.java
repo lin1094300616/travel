@@ -1,10 +1,12 @@
 package com.examp.travel.system.service.imp;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
+import com.examp.travel.system.dao.PictureMapper;
 import com.examp.travel.system.dao.SceneryMapper;
+import com.examp.travel.system.model.Picture;
 import com.examp.travel.system.model.Scenery;
-import com.examp.travel.system.model.User;
 import com.examp.travel.system.service.ISceneryService;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +22,32 @@ import java.util.List;
  * @since 2020-01-03
  */
 @Service
-public class SceneryServiceImpl implements ISceneryService {
+public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> implements ISceneryService {
 
     @Resource
     SceneryMapper sceneryMapper;
+
+    @Resource
+    PictureMapper pictureMapper;
+
+    @Override
+    public List<Scenery> findAllByNameAndLocation(String name, String location) {
+        List<Scenery> sceneryList;
+        if ((location == null) || location.trim().equals("")) {
+            sceneryList = sceneryMapper.findSceneryByName(name);
+        }else {
+            sceneryList = sceneryMapper.findSceneryByNameAndLocation(name,location);
+        }
+        if ((sceneryList == null) || (sceneryList.isEmpty())) {
+            return null;
+        }
+        for (Scenery scenery : sceneryList
+             ) {
+            List<Picture> pictureList = pictureMapper.findAllByEntityId(scenery.getSceneryId().intValue());
+            scenery.setPictureList(pictureList);
+        }
+        return sceneryList;
+    }
 
     @Override
     public Response add(Scenery scenery) {

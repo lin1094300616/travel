@@ -1,12 +1,10 @@
 package com.examp.travel.framework.util;
 
 import com.examp.travel.framework.entity.ConstantsEnum;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
@@ -27,7 +25,6 @@ public class FileUtil {
                 BASE64Encoder encoder = new BASE64Encoder();
                 // 通过base64来转化图片
                 String data = encoder.encode(file.getBytes());
-
 
             } catch (Exception e) {
                 e.printStackTrace();

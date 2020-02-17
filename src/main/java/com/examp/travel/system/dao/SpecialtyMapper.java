@@ -1,8 +1,6 @@
 package com.examp.travel.system.dao;
 
 import com.examp.travel.system.model.Specialty;
-import com.examp.travel.system.model.Specialty;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.examp.travel.system.model.User;
 import org.apache.ibatis.annotations.*;
 

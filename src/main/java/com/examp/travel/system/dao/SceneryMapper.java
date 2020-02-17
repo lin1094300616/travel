@@ -19,6 +19,18 @@ public interface SceneryMapper extends BaseMapper<Scenery> {
 
     @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
             "from scenery " +
+            "where name like '%${value}%'  ")
+    List<Scenery> findSceneryByName(String name);
+
+    @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
+            "from scenery " +
+            "where name like '%${value}%' " +
+            "and location = #{location}")
+    List<Scenery> findSceneryByNameAndLocation(@Param(value = "value") String name,@Param(value = "location")String location);
+
+    /**2020-02-11**/
+    @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
+            "from scenery " +
             "where name = #{name}")
     Scenery findByName(@Param("name") String name);
 

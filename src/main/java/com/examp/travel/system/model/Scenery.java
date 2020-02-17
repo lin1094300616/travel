@@ -1,5 +1,12 @@
 package com.examp.travel.system.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * <p>
  * 
@@ -8,8 +15,12 @@ package com.examp.travel.system.model;
  * @author msi
  * @since 2020-01-03
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class Scenery implements Serializable {
 
-public class Scenery  {
+    private static final long serialVersionUID = 1L;
 
     /**
      * 景点ID
@@ -37,19 +48,19 @@ public class Scenery  {
      */
     private String introduce;
     /**
-     * 关联图片id
+     * 门票价格
      */
     private Long ticketPrice;
     /**
-     * 关联图片id
+     * 营业时间
      */
     private String openingTime;
     /**
-     * 关联图片id
+     * 手机号
      */
     private String phone;
     /**
-     * 关联图片id
+     * 地址
      */
     private String address;
     /**
@@ -61,7 +72,7 @@ public class Scenery  {
      */
     private String ticket;
 
-
+    private List<Picture> pictureList;
 
     public Long getSceneryId() {
         return sceneryId;
@@ -157,5 +168,13 @@ public class Scenery  {
 
     public void setTicket(String ticket) {
         this.ticket = ticket;
+    }
+
+    public List<Picture> getPictureList() {
+        return pictureList;
+    }
+
+    public void setPictureList(List<Picture> pictureList) {
+        this.pictureList = pictureList;
     }
 }

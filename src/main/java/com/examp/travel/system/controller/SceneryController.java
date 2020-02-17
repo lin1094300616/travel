@@ -48,7 +48,7 @@ public class SceneryController {
         return sceneryService.delete(sceneryId);
     }
 
-    @RequestMapping(value = "/{sceneryId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{sceneryId}")
     public Response getSceneryById(@PathVariable("sceneryId") Long sceneryId) {
         Scenery scenery = sceneryService.findScenery(sceneryId);
         if (scenery != null) {
@@ -57,17 +57,23 @@ public class SceneryController {
         return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getData());
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @GetMapping(value = "/list")
     public List<Scenery> getScenerys() {
         return sceneryService.findSceneryList();
     }
 
-    @GetMapping("/page/{page}/{size}")
-    public Response findByPage(@PathVariable(value = "page")Integer page, @PathVariable(value = "size")Integer size) {
+    @GetMapping("/page")
+    public Response findByPage(@RequestParam(value = "page") Integer page,
+                               @RequestParam(value = "size") Integer size,
+                               @RequestParam(value = "name") String name,
+                               @RequestParam(value = "location") String location) {
         //分页并查询
         Page<Scenery> pageInfo = PageHelper.startPage(page, size);
-        List<Scenery> scenerys = sceneryService.findSceneryList();
+        List<Scenery> sceneryList = sceneryService.findAllByNameAndLocation(name,location);
         JSONObject result = PageUtil.pageBaseInfo(pageInfo);
-        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), scenerys, result);
+        if (sceneryList == null) {
+            return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), "未查询到相关记录", result);
+        }
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), sceneryList, result);
     }
 }
