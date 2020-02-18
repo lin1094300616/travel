@@ -68,7 +68,7 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
             return  Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());
         }
         if(sceneryMapper.update(scenery) == 1) {
-            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),scenery);
         }else {
             return  Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());
         }
