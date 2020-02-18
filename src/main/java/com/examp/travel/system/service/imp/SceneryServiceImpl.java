@@ -95,4 +95,5 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
     public List<Scenery> findSceneryList() {
         return sceneryMapper.findSceneryList();
     }
+
 }
