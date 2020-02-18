@@ -55,7 +55,7 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
             return  Response.factoryResponse(StatusEnum.RET_INSERT_EXIST.getCode(),StatusEnum.RET_INSERT_EXIST.getData());
         }
         if(sceneryMapper.add(scenery) == 1) {
-            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),scenery.getSceneryId());
         }else {
             return  Response.factoryResponse(StatusEnum.RET_INSERT_FAIL.getCode(),StatusEnum.RET_INSERT_FAIL.getData());
         }
