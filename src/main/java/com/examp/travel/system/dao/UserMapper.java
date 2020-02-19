@@ -1,5 +1,6 @@
 package com.examp.travel.system.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.examp.travel.system.model.User;
 import org.apache.ibatis.annotations.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @version 1.0
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     @Select("select user_id,user_name, name as name, phone, email, role_name " +
             "from user " +

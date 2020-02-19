@@ -31,6 +31,11 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
     PictureMapper pictureMapper;
 
     @Override
+    public List<Specialty> findAllByUserId(Long userId) {
+        return specialtyMapper.findAllByUserId(userId);
+    }
+
+    @Override
     public List<Specialty> findAllByName(String name) {
         List<Specialty> specialtyList = specialtyMapper.findAllByName(name);
         if ((specialtyList == null) || (specialtyList.isEmpty())) {

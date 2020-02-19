@@ -18,8 +18,6 @@ public interface ISceneryService extends IService<Scenery> {
 
     List<Scenery> findAllByNameAndLocation(String name, String location);
 
-//    List<Scenery> test();
-
     Response add(Scenery scenery);
 
     Response update(Scenery scenery);

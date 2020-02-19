@@ -17,6 +17,21 @@ import java.util.List;
 @Mapper
 public interface SpecialtyMapper extends BaseMapper<Specialty> {
 
+    /**
+     * 查询
+     * @param userId
+     * @return
+     */
+    @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
+            "from specialty " +
+            "where user_id = #{userId} ")
+    List<Specialty> findAllByUserId(@Param("userId")Long userId);
+
+    /**
+     * 按名称模糊查询
+     * @param name
+     * @return
+     */
     @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
             "from specialty " +
             "where name like '%${value}%'  ")

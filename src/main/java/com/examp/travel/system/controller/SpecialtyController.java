@@ -31,6 +31,15 @@ public class SpecialtyController {
     @Autowired
     ISpecialtyService specialtyService;
 
+    @GetMapping("/userId/{userId}")
+    public Response findAllByUserId(@PathVariable("userId") Long userId) {
+        List<Specialty> specialtyList = specialtyService.findAllByUserId(userId);
+        if (specialtyList == null || specialtyList.isEmpty()) {
+            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getCode());
+        }
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), specialtyList);
+    }
+
     @PostMapping
     public Response postSpecialty(@RequestBody Specialty specialty) {
         if (CommUtil.isNullString(specialty.getName(), specialty.getType())) {
@@ -59,8 +68,12 @@ public class SpecialtyController {
     }
 
     @GetMapping(value = "/list")
-    public List<Specialty> findAll() {
-        return specialtyService.findAll();
+    public Response findAll() {
+        List<Specialty> specialtyList = specialtyService.findAll();
+        if (specialtyList == null || specialtyList.isEmpty()) {
+            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getCode());
+        }
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), specialtyList);
     }
 
     @GetMapping("/page")
@@ -72,7 +85,7 @@ public class SpecialtyController {
         List<Specialty> specialtyList = specialtyService.findAllByName(name);
         JSONObject result = PageUtil.pageBaseInfo(pageInfo);
         if (specialtyList == null) {
-            return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), "未查询到相关记录", result);
+            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getCode(), result);
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), specialtyList, result);
     }

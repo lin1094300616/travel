@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface ISpecialtyService {
 
+    List<Specialty> findAllByUserId(Long userId);
+
     List<Specialty> findAllByName(String name);
 
     Response add(Specialty specialty);

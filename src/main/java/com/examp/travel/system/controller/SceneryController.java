@@ -58,8 +58,12 @@ public class SceneryController {
     }
 
     @GetMapping(value = "/list")
-    public List<Scenery> getScenerys() {
-        return sceneryService.findSceneryList();
+    public Response getScenerys() {
+        List<Scenery> specialtyList = sceneryService.findSceneryList();
+        if (specialtyList == null || specialtyList.isEmpty()) {
+            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getCode());
+        }
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), specialtyList);
     }
 
     @GetMapping("/page")
@@ -72,7 +76,7 @@ public class SceneryController {
         List<Scenery> sceneryList = sceneryService.findAllByNameAndLocation(name,location);
         JSONObject result = PageUtil.pageBaseInfo(pageInfo);
         if (sceneryList == null) {
-            return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), "未查询到相关记录", result);
+            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getCode());
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), sceneryList, result);
     }
