@@ -34,9 +34,9 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
     public List<Scenery> findAllByNameAndLocation(String name, String location) {
         List<Scenery> sceneryList;
         if ((location == null) || location.trim().equals("")) {
-            sceneryList = sceneryMapper.findSceneryByName(name);
+            sceneryList = sceneryMapper.findAllByName(name);
         }else {
-            sceneryList = sceneryMapper.findSceneryByNameAndLocation(name,location);
+            sceneryList = sceneryMapper.findAllByNameAndLocation(name,location);
         }
         if ((sceneryList == null) || (sceneryList.isEmpty())) {
             return null;

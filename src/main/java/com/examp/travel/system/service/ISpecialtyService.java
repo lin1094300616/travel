@@ -16,13 +16,15 @@ import java.util.List;
  */
 public interface ISpecialtyService {
 
+    List<Specialty> findAllByName(String name);
+
     Response add(Specialty specialty);
 
     Response update(Specialty specialty);
 
     Response delete(Long specialtyId);
 
-    Specialty findSpecialty(Long specialtyId);
+    Specialty findById(Long specialtyId);
 
-    List<Specialty> findSpecialtyList();
+    List<Specialty> findAll();
 }
