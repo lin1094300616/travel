@@ -5,6 +5,7 @@ import com.examp.travel.system.model.User;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class {@code Object} is 用户业务层接口类.
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface UserService {
 
-    boolean login(String userName, String password, HttpSession session);
+    Response login(String userName, String password, HttpSession session);
 
     Response add(User user);
 
@@ -25,5 +26,7 @@ public interface UserService {
     User findUser(Integer userId);
 
     List<User> findUserList();
+
+    List<User> findWrapper(Map<String, String> querymap);
 
 }

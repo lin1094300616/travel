@@ -1,8 +1,10 @@
 package com.examp.travel.system.service.imp;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
 import com.examp.travel.framework.util.Md5Util;
+import com.examp.travel.framework.util.PageUtil;
 import com.examp.travel.system.dao.UserMapper;
 import com.examp.travel.system.model.User;
 import com.examp.travel.system.service.UserService;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class {@code Object} is 用户业务层实现类，实现业务处理.
@@ -24,16 +27,14 @@ public class UserServiceImp implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public boolean login(String userName, String password, HttpSession session) {
+    public Response login(String userName, String password, HttpSession session) {
         User user = userMapper.findByUserName(userName);
-        if (user == null) {
-            return  false;
+        if (user == null || !user.getPassword().equals(Md5Util.transMD5(userName + password))) {
+            return  Response.factoryResponse(StatusEnum.USER_ERROR_1001.getCode(),StatusEnum.USER_ERROR_1001.getData());
         }
-        if (!user.getPassword().equals(Md5Util.transMD5(userName + password))) {
-            return false;
-        }
+        user.setPassword(null);
         session.setAttribute("user",user);
-        return true;
+        return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),user);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class UserServiceImp implements UserService {
     public Response update(User user) {
         User userByUserName = userMapper.findByUserName(user.getUserName());
         if ((userByUserName != null) && (!userByUserName.getUserId().equals(user.getUserId()))) {
-            return  Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());
+            return  Response.factoryResponse(StatusEnum.RET_INSERT_EXIST.getCode(),StatusEnum.RET_INSERT_EXIST.getData());
         }
         if(userMapper.update(user) == 1) {
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
@@ -85,5 +86,11 @@ public class UserServiceImp implements UserService {
     @Override
     public List<User> findUserList() {
         return userMapper.findUserList();
+    }
+
+    @Override
+    public List<User> findWrapper(Map<String, String> queryMap) {
+        QueryWrapper<User> queryWrapper = PageUtil.getQueryWrapper(queryMap);
+        return userMapper.getAll(queryWrapper);
     }
 }

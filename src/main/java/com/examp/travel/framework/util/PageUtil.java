@@ -1,7 +1,10 @@
 package com.examp.travel.framework.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
+
+import java.util.Map;
 
 /**
  * @ClassName: PageUtil
@@ -13,12 +16,34 @@ import com.github.pagehelper.Page;
 public class PageUtil {
 
     /**
-     * @Author MSI
-     * @Description 封装分页信息
-     * @Date 2019/1/7 15:51
-     * @Param [page]
-     * @return com.alibaba.fastjson.JSONObject 
-     **/       
+     * 构建查询条件
+     * @param queryMap
+     * @return
+     */
+    public static QueryWrapper getQueryWrapper(Map<String, String> queryMap) {
+        //构建Mybatis 条件构造器
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        //遍历查询条件Map， page和size 在controller 层已经去除，剩下的都是查询条件
+        for(Map.Entry<String, String> entry : queryMap.entrySet()){
+            String mapKey = entry.getKey();
+            String mapValue = entry.getValue();
+
+            //如果key 后缀有Like 则表示该字段模糊查询
+            if (mapKey.endsWith("_like")) {
+                //写入之前先去除后缀的_like
+                queryWrapper.like(mapKey.substring(0,mapKey.length()-5),mapValue);
+            }else if ((mapValue == null) || (mapValue.equals(""))) {
+                //如果不是模糊查询，且value 为null 或 "", 不添加查询条件
+                continue;
+            }else {
+                //无Like 且value 不为null 或"" ,则表示该字段精确查询
+                queryWrapper.eq(mapKey,mapValue);
+            }
+        }
+        return queryWrapper;
+    }
+
+
     public static JSONObject pageInfo(Page page) {
         JSONObject result = new JSONObject();
         JSONObject jsonObject = new JSONObject();

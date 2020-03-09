@@ -18,7 +18,7 @@ public enum StatusEnum {
     SYSTEM_ERROR_9006("9006","请求方法未写映射注解"),
 
     RET_INSERT_FAIL("A001","新增数据库记录失败"),RET_UPDATE_FAIL("A002","修改数据库记录失败"),
-    RET_DELETE_FAIL("A003","删除数据库记录失败"),RET_INSERT_EXIST("A004","记录已存在，新增失败"),
+    RET_DELETE_FAIL("A003","删除数据库记录失败"),RET_INSERT_EXIST("A004","记录已存在"),
     RET_NOT_DATA_FOUND("A005","未查询到相关记录"),
 
     USER_ERROR_1001("1001","用户名或密码不正确"),USER_ERROR_1002("1002","用户状态异常"),

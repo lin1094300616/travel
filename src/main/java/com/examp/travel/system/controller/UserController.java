@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class {@code Object} is 视图层，数据接收、返回与校验.
@@ -33,13 +34,10 @@ public class UserController {
 
     @PostMapping("/login")
     public Response login(@RequestBody User user, HttpSession session) {
-        if (CommUtil.isNullString(user.getName(),user.getPassword())) {
+        if (CommUtil.isNullString(user.getUserName(),user.getPassword())) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
-        if (userService.login(user.getUserName(),user.getPassword(),session)) {
-            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),LOGIN_OK);
-        }
-        return  Response.factoryResponse(StatusEnum.USER_ERROR_1001.getCode(),StatusEnum.USER_ERROR_1001.getData());
+        return userService.login(user.getUserName(), user.getPassword(), session);
     }
 
     @PostMapping("/loginOut")
@@ -69,7 +67,7 @@ public class UserController {
         return userService.delete(userId);
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{userId}")
     public Response getUserById(@PathVariable("userId") Integer userId) {
         User user = userService.findUser(userId);
         if (user != null) {
@@ -78,7 +76,7 @@ public class UserController {
         return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getData());
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @GetMapping(value = "/list")
     public Response getUsers() {
         List<User> userList = userService.findUserList();
         if ((userList == null) || userList.isEmpty()) {
@@ -87,12 +85,17 @@ public class UserController {
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), userList);
     }
 
-    @GetMapping("/page/{page}/{size}")
-    public Response findByPage(@PathVariable(value = "page")Integer page, @PathVariable(value = "size")Integer size) {
-        //分页并查询
-        Page<User> pageInfo = PageHelper.startPage(page, size);
-        List<User> users = userService.findUserList();
+    @PostMapping("/page")
+    public Response findByPage(@RequestBody Map<String,String> queryMap) {
+        //获取分页信息，并从查询条件中去除
+        Integer page = Integer.valueOf(queryMap.get("page"));
+        Integer size = Integer.valueOf(queryMap.get("size"));
+        queryMap.remove("page");
+        queryMap.remove("size");
+
+        Page<User> pageInfo = PageHelper.startPage(page,size);
+        List<User> userList = userService.findWrapper(queryMap);
         JSONObject result = PageUtil.pageBaseInfo(pageInfo);
-        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), users, result);
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), userList, result);
     }
 }
