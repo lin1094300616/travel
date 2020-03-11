@@ -5,6 +5,7 @@ import com.examp.travel.framework.entity.Response;
 import com.examp.travel.system.model.Scenery;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,4 +28,6 @@ public interface ISceneryService extends IService<Scenery> {
     Scenery findScenery(Long sceneryId);
 
     List<Scenery> findSceneryList();
+
+    List<Scenery> findWrapper(Map<String, String> queryMap);
 }

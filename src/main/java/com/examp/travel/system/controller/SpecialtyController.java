@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -76,17 +77,17 @@ public class SpecialtyController {
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), specialtyList);
     }
 
-    @GetMapping("/page")
-    public Response findByPage(@RequestParam(value = "page") Integer page,
-                               @RequestParam(value = "size") Integer size,
-                               @RequestParam(value = "name") String name) {
-        //分页并查询
-        Page<Specialty> pageInfo = PageHelper.startPage(page, size);
-        List<Specialty> specialtyList = specialtyService.findAllByName(name);
+    @PostMapping("/page")
+    public Response findByPage(@RequestBody Map<String,String> queryMap) {
+        //获取分页信息，并从查询条件中去除
+        Integer page = Integer.valueOf(queryMap.get("page"));
+        Integer size = Integer.valueOf(queryMap.get("size"));
+        queryMap.remove("page");
+        queryMap.remove("size");
+
+        Page<Specialty> pageInfo = PageHelper.startPage(page,size);
+        List<Specialty> userList = specialtyService.findWrapper(queryMap);
         JSONObject result = PageUtil.pageBaseInfo(pageInfo);
-        if (specialtyList == null) {
-            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getCode(), result);
-        }
-        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), specialtyList, result);
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), userList, result);
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -66,18 +67,17 @@ public class SceneryController {
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), specialtyList);
     }
 
-    @GetMapping("/page")
-    public Response findByPage(@RequestParam(value = "page") Integer page,
-                               @RequestParam(value = "size") Integer size,
-                               @RequestParam(value = "name") String name,
-                               @RequestParam(value = "location") String location) {
-        //分页并查询
-        Page<Scenery> pageInfo = PageHelper.startPage(page, size);
-        List<Scenery> sceneryList = sceneryService.findAllByNameAndLocation(name,location);
+    @PostMapping("/page")
+    public Response findByPage(@RequestBody Map<String,String> queryMap) {
+        //获取分页信息，并从查询条件中去除
+        Integer page = Integer.valueOf(queryMap.get("page"));
+        Integer size = Integer.valueOf(queryMap.get("size"));
+        queryMap.remove("page");
+        queryMap.remove("size");
+
+        Page<Scenery> pageInfo = PageHelper.startPage(page,size);
+        List<Scenery> userList = sceneryService.findWrapper(queryMap);
         JSONObject result = PageUtil.pageBaseInfo(pageInfo);
-        if (sceneryList == null) {
-            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getCode());
-        }
-        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), sceneryList, result);
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), userList, result);
     }
 }

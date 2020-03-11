@@ -5,6 +5,7 @@ import com.examp.travel.system.model.Specialty;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,4 +30,6 @@ public interface ISpecialtyService {
     Specialty findById(Long specialtyId);
 
     List<Specialty> findAll();
+
+    List<Specialty> findWrapper(Map<String, String> queryMap);
 }

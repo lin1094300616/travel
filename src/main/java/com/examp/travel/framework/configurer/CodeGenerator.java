@@ -71,7 +71,7 @@ public class CodeGenerator {
         //自定义数据类型转换
         dataSourceConfig.setTypeConvert(new MySqlTypeConvert());
         dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/travel?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false");
-        dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
+        dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("root");
         mpg.setDataSource(dataSourceConfig);

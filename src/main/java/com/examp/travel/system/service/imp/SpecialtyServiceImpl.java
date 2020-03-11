@@ -1,8 +1,10 @@
 package com.examp.travel.system.service.imp;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
+import com.examp.travel.framework.util.PageUtil;
 import com.examp.travel.system.dao.PictureMapper;
 import com.examp.travel.system.dao.SpecialtyMapper;
 import com.examp.travel.system.model.Picture;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -94,5 +97,11 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
     @Override
     public List<Specialty> findAll() {
         return specialtyMapper.findAll();
+    }
+
+    @Override
+    public List<Specialty> findWrapper(Map<String, String> queryMap) {
+        QueryWrapper<Specialty> queryWrapper = PageUtil.getQueryWrapper(queryMap);
+        return specialtyMapper.getAll(queryWrapper);
     }
 }

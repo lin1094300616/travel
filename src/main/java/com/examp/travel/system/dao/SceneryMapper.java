@@ -1,5 +1,7 @@
 package com.examp.travel.system.dao;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.examp.travel.system.model.Scenery;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
@@ -16,6 +18,14 @@ import java.util.List;
  */
 @Mapper
 public interface SceneryMapper extends BaseMapper<Scenery> {
+
+    /**
+     * 条件构造器查询
+     * @param wrapper
+     * @return
+     */
+    @Select("select * from scenery ${ew.customSqlSegment}")
+    List<Scenery> getAll(@Param(Constants.WRAPPER) QueryWrapper wrapper);
 
     @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
             "from scenery " +

@@ -1,8 +1,10 @@
 package com.examp.travel.system.service.imp;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
+import com.examp.travel.framework.util.PageUtil;
 import com.examp.travel.system.dao.PictureMapper;
 import com.examp.travel.system.dao.SceneryMapper;
 import com.examp.travel.system.model.Picture;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -99,6 +102,12 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
     @Override
     public List<Scenery> findSceneryList() {
         return sceneryMapper.findSceneryList();
+    }
+
+    @Override
+    public List<Scenery> findWrapper(Map<String, String> queryMap) {
+        QueryWrapper<Scenery> queryWrapper = PageUtil.getQueryWrapper(queryMap);
+        return sceneryMapper.getAll(queryWrapper);
     }
 
 }

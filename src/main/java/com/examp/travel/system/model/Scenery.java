@@ -72,6 +72,11 @@ public class Scenery implements Serializable {
      */
     private String ticket;
 
+    /**
+     * 收藏
+     */
+    private Integer stock;
+
     private List<Picture> pictureList;
 
     public Long getSceneryId() {
@@ -176,5 +181,13 @@ public class Scenery implements Serializable {
 
     public void setPictureList(List<Picture> pictureList) {
         this.pictureList = pictureList;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }
