@@ -20,9 +20,9 @@ public interface ICollectService extends IService<Collect> {
 
     Response add(Collect collect);
 
-    Response delete(Long collectId);
+    Response delete(Integer collectId);
 
-    Collect findCollect(Long collectId);
+    Collect findCollect(Integer collectId);
 
     List<Collect> findCollectList();
 }

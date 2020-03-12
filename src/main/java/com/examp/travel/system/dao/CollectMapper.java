@@ -34,12 +34,12 @@ public interface CollectMapper extends BaseMapper<Collect> {
     int add(Collect collect);
 
     @Delete("delete from collect where collect_id = #{collectId}")
-    int delete(Long collectId);
+    int delete(Integer collectId);
 
     @Select("select * " +
             "from collect " +
             "where collect_id = #{collectId}")
-    Collect findCollect(Long collectId);
+    Collect findCollect(Integer collectId);
 
     @Select("select * " +
             "from collect")

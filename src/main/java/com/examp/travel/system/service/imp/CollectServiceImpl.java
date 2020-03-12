@@ -51,7 +51,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     }
 
     @Override
-    public Response delete(Long collectId) {
+    public Response delete(Integer collectId) {
         if (collectMapper.findCollect(collectId) == null) {
             return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
@@ -62,7 +62,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     }
 
     @Override
-    public Collect findCollect(Long collectId) {
+    public Collect findCollect(Integer collectId) {
         return collectMapper.findCollect(collectId);
     }
 

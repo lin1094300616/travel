@@ -107,7 +107,13 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
     @Override
     public List<Scenery> findWrapper(Map<String, String> queryMap) {
         QueryWrapper<Scenery> queryWrapper = PageUtil.getQueryWrapper(queryMap);
-        return sceneryMapper.getAll(queryWrapper);
+        List<Scenery> sceneryList = sceneryMapper.getAll(queryWrapper);
+        for (Scenery scenery : sceneryList
+        ) {
+            List<Picture> pictureList = pictureMapper.findAllByEntityId(scenery.getSceneryId().intValue());
+            scenery.setPictureList(pictureList);
+        }
+        return sceneryList;
     }
 
 }
