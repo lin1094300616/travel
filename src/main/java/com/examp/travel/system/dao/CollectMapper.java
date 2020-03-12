@@ -26,8 +26,14 @@ public interface CollectMapper extends BaseMapper<Collect> {
 
     @Select("select * " +
             "from collect " +
+            "where user_id = #{userId} " +
+            "and object_id = #{ObjectId}")
+    Collect findByUserIdAndObjectId(@Param("userId") Integer userId, @Param("ObjectId") Integer ObjectId);
+    
+    @Select("select * " +
+            "from collect " +
             "where user_id = #{userId}")
-    List<Collect> findByUserId(@Param("userId") Long userId);
+    List<Collect> findByUserId(@Param("userId") Integer userId);
 
     @Insert("INSERT INTO `collect` VALUES (#{collectId}, #{type}, #{userId}, #{objectId} )")
     @Options(useGeneratedKeys = true, keyColumn = "collectId", keyProperty = "collectId")

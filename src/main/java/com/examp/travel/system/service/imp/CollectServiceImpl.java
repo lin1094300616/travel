@@ -31,18 +31,41 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Response stock(Collect collect) {
         String tableName = collect.getType();
-        Integer stock = collect.getStock();
+        //Integer stock = collect.getStock();
         String keyId = tableName + "_id";
-        if(collectMapper.update(tableName, keyId, stock, collect.getObjectId()) > 0) {
-            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+        //查询收藏记录是否存在
+        Collect stockCollect = collectMapper.findByUserIdAndObjectId(collect.getUserId(), collect.getObjectId());
+        //不存在，则新增
+        if (stockCollect == null) {
+            collectMapper.update(tableName, keyId, 1, collect.getObjectId());
+            if (collectMapper.add(collect) <= 0) {
+                return Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());
+            }
+        }else {
+            //存在，则删除
+            collectMapper.update(tableName, keyId, -1, collect.getObjectId());
+            if (collectMapper.delete(stockCollect.getCollectId()) <= 0) {
+                return Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());
+            }
         }
-        return  Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());
+        return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+
+
+//        if(collectMapper.update(tableName, keyId, stock, collect.getObjectId()) > 0) {
+//            if (stock >= 1 && collect.getCollectId() > 0){
+//                collectMapper.add(collect);
+//            }else {
+//                collectMapper.delete(collect.getCollectId());
+//            }
+//            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+//        }
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+
     public Response add(Collect collect) {
         if (collectMapper.add(collect) == 1) {
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
