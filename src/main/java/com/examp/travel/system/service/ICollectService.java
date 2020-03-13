@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface ICollectService extends IService<Collect> {
 
+    Response findByUserId(Integer collectId);
+
     Response stock(Collect collect);
 
     Response add(Collect collect);

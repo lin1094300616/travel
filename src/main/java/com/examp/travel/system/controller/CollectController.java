@@ -28,7 +28,12 @@ public class CollectController {
     ICollectService collectService;
 
     @PostMapping
-    public Response postScenery(@RequestBody Collect collect) {
+    public Response post(@RequestBody Collect collect) {
         return collectService.stock(collect);
+    }
+
+    @GetMapping("/{userId}")
+    public Response findCollect(@PathVariable("userId") Integer userId) {
+        return collectService.findByUserId(userId);
     }
 }

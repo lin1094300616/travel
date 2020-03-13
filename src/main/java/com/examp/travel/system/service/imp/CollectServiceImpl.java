@@ -26,6 +26,15 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     @Resource
     CollectMapper collectMapper;
 
+    @Override
+    public Response findByUserId(Integer collectId) {
+        List<Collect> collectList = collectMapper.findByUserId(collectId);
+        if (collectList.isEmpty()) {
+            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
+        }
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),collectList);
+    }
+
     /**
      * @param collect
      * @return
@@ -53,15 +62,6 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         }
         return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
 
-
-//        if(collectMapper.update(tableName, keyId, stock, collect.getObjectId()) > 0) {
-//            if (stock >= 1 && collect.getCollectId() > 0){
-//                collectMapper.add(collect);
-//            }else {
-//                collectMapper.delete(collect.getCollectId());
-//            }
-//            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
-//        }
     }
 
     @Override
