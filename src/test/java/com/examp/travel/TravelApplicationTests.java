@@ -35,7 +35,6 @@ public class TravelApplicationTests {
         //update scenery set stock = stock + -1 where scenery_id = 10003
         Collect collect = new Collect();
         collect.setType("scenery");
-        collect.setStock(1);
         collect.setObjectId(10003);
         collectService.stock(collect);
     }

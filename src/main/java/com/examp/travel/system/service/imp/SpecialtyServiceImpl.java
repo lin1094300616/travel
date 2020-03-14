@@ -34,7 +34,7 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
     PictureMapper pictureMapper;
 
     @Override
-    public List<Specialty> findAllByUserId(Long userId) {
+    public List<Specialty> findAllByUserId(Integer userId) {
         return specialtyMapper.findAllByUserId(userId);
     }
 
@@ -78,7 +78,7 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
     }
 
     @Override
-    public Response delete(Long specialtyId) {
+    public Response delete(Integer specialtyId) {
         if (specialtyMapper.findById(specialtyId) == null) {
             return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
@@ -90,7 +90,7 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
     }
 
     @Override
-    public Specialty findById(Long specialtyId) {
+    public Specialty findById(Integer specialtyId) {
         return specialtyMapper.findById(specialtyId);
     }
 

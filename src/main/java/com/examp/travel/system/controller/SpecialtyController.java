@@ -33,7 +33,7 @@ public class SpecialtyController {
     ISpecialtyService specialtyService;
 
     @GetMapping("/userId/{userId}")
-    public Response findAllByUserId(@PathVariable("userId") Long userId) {
+    public Response findAllByUserId(@PathVariable("userId") Integer userId) {
         List<Specialty> specialtyList = specialtyService.findAllByUserId(userId);
         if (specialtyList == null || specialtyList.isEmpty()) {
             return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), StatusEnum.RET_NOT_DATA_FOUND.getCode());
@@ -55,12 +55,12 @@ public class SpecialtyController {
     }
 
     @DeleteMapping(value = "/{specialtyId}")
-    public Response delete(@PathVariable(value = "specialtyId")Long specialtyId) {
+    public Response delete(@PathVariable(value = "specialtyId")Integer specialtyId) {
         return specialtyService.delete(specialtyId);
     }
 
     @GetMapping(value = "/{specialtyId}")
-    public Response getSpecialtyById(@PathVariable("specialtyId") Long specialtyId) {
+    public Response getSpecialtyById(@PathVariable("specialtyId") Integer specialtyId) {
         Specialty specialty = specialtyService.findById(specialtyId);
         if (specialty != null) {
             return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), specialty);

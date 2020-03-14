@@ -1,5 +1,7 @@
 package com.examp.travel.system.dao;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.examp.travel.system.model.Collect;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
@@ -16,6 +18,9 @@ import java.util.List;
  */
 @Mapper
 public interface CollectMapper extends BaseMapper<Collect> {
+
+    @Select("select * from collect ${ew.customSqlSegment}")
+    List<Collect> getAll(@Param(Constants.WRAPPER) QueryWrapper wrapper);
 
     @Update("update ${tableName} set stock = stock + #{stock} " +
             "where ${keyId}= #{objectId}")

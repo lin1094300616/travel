@@ -18,7 +18,6 @@ import java.util.List;
  */
 @Mapper
 public interface SpecialtyMapper extends BaseMapper<Specialty> {
-
     @Select("select * from specialty ${ew.customSqlSegment}")
     List<Specialty> getAll(@Param(Constants.WRAPPER) QueryWrapper wrapper);
 
@@ -30,7 +29,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
     @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
             "from specialty " +
             "where user_id = #{userId} ")
-    List<Specialty> findAllByUserId(@Param("userId")Long userId);
+    List<Specialty> findAllByUserId(@Param("userId")Integer userId);
 
     /**
      * 按名称模糊查询
@@ -77,7 +76,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * @return
      */
     @Delete("delete from specialty where specialty_id = #{specialtyId}")
-    int deleteById(Long specialtyId);
+    int deleteById(Integer specialtyId);
 
     /**
      * 按ID查询
@@ -87,7 +86,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
     @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
             "from specialty " +
             "where specialty_id = #{specialtyId}")
-    Specialty findById(@Param("specialtyId") Long specialtyId);
+    Specialty findById(@Param("specialtyId") Integer specialtyId);
 
     /**
      * 查询全部

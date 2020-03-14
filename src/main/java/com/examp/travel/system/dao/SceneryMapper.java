@@ -56,12 +56,12 @@ public interface SceneryMapper extends BaseMapper<Scenery> {
     int update(Scenery scenery);
 
     @Delete("delete from scenery where scenery_id = #{scenery_id}")
-    int delete(Long sceneryId);
+    int delete(Integer sceneryId);
 
     @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
             "from scenery " +
             "where scenery_id = #{scenery_id}")
-    Scenery findScenery(@Param("scenery_id") Long sceneryId);
+    Scenery findScenery(@Param("scenery_id") Integer sceneryId);
 
     @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
             "from scenery")

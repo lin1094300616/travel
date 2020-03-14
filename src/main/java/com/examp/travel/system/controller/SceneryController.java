@@ -45,12 +45,12 @@ public class SceneryController {
     }
 
     @DeleteMapping(value = "/{sceneryId}")
-    public Response delete(@PathVariable(value = "sceneryId")Long sceneryId) {
+    public Response delete(@PathVariable(value = "sceneryId")Integer sceneryId) {
         return sceneryService.delete(sceneryId);
     }
 
     @GetMapping(value = "/{sceneryId}")
-    public Response getSceneryById(@PathVariable("sceneryId") Long sceneryId) {
+    public Response getSceneryById(@PathVariable("sceneryId") Integer sceneryId) {
         Scenery scenery = sceneryService.findScenery(sceneryId);
         if (scenery != null) {
             return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(), scenery);

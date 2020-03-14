@@ -3,6 +3,8 @@ package com.examp.travel.system.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -43,7 +45,9 @@ public class Collect implements Serializable {
      */
     private Integer objectId;
 
-    private Integer stock;
+    private Scenery scenery;
+
+    private Specialty specialty;
 
     public Integer getCollectId() {
         return collectId;
@@ -77,11 +81,19 @@ public class Collect implements Serializable {
         this.objectId = objectId;
     }
 
-    public Integer getStock() {
-        return stock;
+    public Scenery getScenery() {
+        return scenery;
     }
 
-    public void setStock(Integer stock) {
-        this.stock = stock;
+    public void setScenery(Scenery scenery) {
+        this.scenery = scenery;
+    }
+
+    public Specialty getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(Specialty specialty) {
+        this.specialty = specialty;
     }
 }

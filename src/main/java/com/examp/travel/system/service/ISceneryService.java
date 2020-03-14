@@ -23,9 +23,9 @@ public interface ISceneryService extends IService<Scenery> {
 
     Response update(Scenery scenery);
 
-    Response delete(Long sceneryId);
+    Response delete(Integer sceneryId);
 
-    Scenery findScenery(Long sceneryId);
+    Scenery findScenery(Integer sceneryId);
 
     List<Scenery> findSceneryList();
 

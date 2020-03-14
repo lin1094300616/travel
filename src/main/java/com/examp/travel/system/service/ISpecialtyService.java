@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public interface ISpecialtyService {
 
-    List<Specialty> findAllByUserId(Long userId);
+    List<Specialty> findAllByUserId(Integer userId);
 
     List<Specialty> findAllByName(String name);
 
@@ -25,9 +25,9 @@ public interface ISpecialtyService {
 
     Response update(Specialty specialty);
 
-    Response delete(Long specialtyId);
+    Response delete(Integer specialtyId);
 
-    Specialty findById(Long specialtyId);
+    Specialty findById(Integer specialtyId);
 
     List<Specialty> findAll();
 

@@ -5,6 +5,7 @@ import com.examp.travel.system.model.Collect;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,4 +28,6 @@ public interface ICollectService extends IService<Collect> {
     Collect findCollect(Integer collectId);
 
     List<Collect> findCollectList();
+
+    List<Collect> findWrapper(Map<String, String> queryMap);
 }

@@ -78,7 +78,7 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
     }
 
     @Override
-    public Response delete(Long sceneryId) {
+    public Response delete(Integer sceneryId) {
         if (sceneryMapper.findScenery(sceneryId) == null) {
             return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
@@ -91,7 +91,7 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
     }
 
     @Override
-    public Scenery findScenery(Long sceneryId) {
+    public Scenery findScenery(Integer sceneryId) {
         Scenery scenery = sceneryMapper.findScenery(sceneryId);
         if (scenery != null && scenery.getSceneryId() > 0) {
             scenery.setPictureList(pictureMapper.findAllByEntityId(scenery.getSceneryId().intValue()));
