@@ -26,7 +26,8 @@ public class SessionFilter implements Filter {
     private static final String[] includeUrls = new String[]{
             "/user/list",
             "/user/register",
-            "/user/login"};
+            "/user/login",
+            "/scenery/page"};
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -38,7 +39,10 @@ public class SessionFilter implements Filter {
 
         System.out.println("filter url:"+uri);
         //判断url是否需要过滤
-        if (!isNeedFilter(uri)) { //不需要过滤直接传给下一个过滤器
+        System.out.println("getMethod = " + request.getMethod());
+        if(request.getMethod().equals("GET")){
+            filterChain.doFilter(servletRequest, servletResponse);
+        }else if (!isNeedFilter(uri)) { //不需要过滤直接传给下一个过滤器
             filterChain.doFilter(servletRequest, servletResponse);
         } else { //需要过滤器
             // session中包含user对象,则是登录状态
@@ -63,7 +67,7 @@ public class SessionFilter implements Filter {
     public boolean isNeedFilter(String uri) {
 
         for (String includeUrl : includeUrls) {
-            if (includeUrl.equals(uri)) {
+            if (uri.contains(includeUrl)) {
                 return false;
             }
         }

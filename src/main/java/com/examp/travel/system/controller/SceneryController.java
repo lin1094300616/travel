@@ -75,6 +75,7 @@ public class SceneryController {
         queryMap.remove("page");
         queryMap.remove("size");
 
+
         Page<Scenery> pageInfo = PageHelper.startPage(page,size);
         List<Scenery> userList = sceneryService.findWrapper(queryMap);
         JSONObject result = PageUtil.pageBaseInfo(pageInfo);
