@@ -50,8 +50,8 @@ public interface SceneryMapper extends BaseMapper<Scenery> {
 
     @Update("update scenery set name = #{name},location = #{location},level = #{level}, " +
             "type = #{type}, introduce = #{introduce} , ticket_price = #{ticketPrice}, " +
-            "opening_time = #{openingTime},phone = #{phone},address = #{address}," +
-            "traffic = #{traffic},ticket = #{ticket}" +
+            "opening_time = #{openingTime},phone = #{phone},address = #{address}, " +
+            "traffic = #{traffic},ticket = #{ticket} " +
             "where scenery_id = #{sceneryId}")
     int update(Scenery scenery);
 
