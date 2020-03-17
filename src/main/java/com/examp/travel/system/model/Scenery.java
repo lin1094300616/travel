@@ -75,7 +75,7 @@ public class Scenery implements Serializable {
     /**
      * 收藏
      */
-    private Integer stock;
+    private Integer stock = 0;
 
     private List<Picture> pictureList;
 

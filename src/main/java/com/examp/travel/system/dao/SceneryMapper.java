@@ -44,7 +44,7 @@ public interface SceneryMapper extends BaseMapper<Scenery> {
             "where name = #{name}")
     Scenery findByName(@Param("name") String name);
 
-    @Insert("INSERT INTO `scenery` VALUES (#{sceneryId}, #{name}, #{location}, #{level}, #{type}, #{introduce}, #{ticketPrice}, #{openingTime}, #{phone}, #{address}, #{traffic}, #{ticket})")
+    @Insert("INSERT INTO `scenery` VALUES (#{sceneryId}, #{name}, #{location}, #{level}, #{type}, #{introduce}, #{ticketPrice}, #{openingTime}, #{phone}, #{address}, #{traffic}, #{ticket}, #{stock})")
     @Options(useGeneratedKeys = true, keyColumn = "sceneryId", keyProperty = "sceneryId")
     int add(Scenery scenery);
 
