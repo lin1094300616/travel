@@ -17,7 +17,9 @@ import java.util.Map;
  */
 public interface ICollectService extends IService<Collect> {
 
-    Response findByUserId(Integer collectId);
+    Response check(Collect collect);
+
+    Response findByUserId(Integer userId);
 
     Response stock(Collect collect);
 

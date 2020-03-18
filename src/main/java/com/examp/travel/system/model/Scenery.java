@@ -25,7 +25,7 @@ public class Scenery implements Serializable {
     /**
      * 景点ID
      */
-    private Long sceneryId;
+    private Integer sceneryId;
     /**
      * 景点名称
      */
@@ -79,11 +79,11 @@ public class Scenery implements Serializable {
 
     private List<Picture> pictureList;
 
-    public Long getSceneryId() {
+    public Integer getSceneryId() {
         return sceneryId;
     }
 
-    public void setSceneryId(Long sceneryId) {
+    public void setSceneryId(Integer sceneryId) {
         this.sceneryId = sceneryId;
     }
 

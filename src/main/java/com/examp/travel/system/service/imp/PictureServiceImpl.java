@@ -27,8 +27,8 @@ public class PictureServiceImpl  implements IPictureService {
     PictureMapper pictureMapper;
     
     @Override
-    public List<Picture> findAllByEntityId(Integer entityId) {
-        return pictureMapper.findAllByEntityId(entityId);
+    public List<Picture> findAllByEntityId(String type, Integer entityId) {
+        return pictureMapper.findAllByEntityId(type,entityId);
     }
 
     @Override

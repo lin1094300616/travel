@@ -31,9 +31,10 @@ public interface CollectMapper extends BaseMapper<Collect> {
 
     @Select("select * " +
             "from collect " +
-            "where user_id = #{userId} " +
+            "where type = #{type} " +
+            "and user_id = #{userId} " +
             "and object_id = #{ObjectId}")
-    Collect findByUserIdAndObjectId(@Param("userId") Integer userId, @Param("ObjectId") Integer ObjectId);
+    Collect getOneCollect(@Param("type")String type, @Param("userId") Integer userId, @Param("ObjectId") Integer ObjectId);
     
     @Select("select * " +
             "from collect " +

@@ -42,6 +42,11 @@ public class CollectController {
         return collectService.findByUserId(userId);
     }
 
+    @PostMapping("/check")
+    public Response check(@RequestBody Collect collect) {
+        return collectService.check(collect);
+    }
+
     @PostMapping("/page")
     public Response findByPage(@RequestBody Map<String,String> queryMap) {
         //获取分页信息，并从查询条件中去除

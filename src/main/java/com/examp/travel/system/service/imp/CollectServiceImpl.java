@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
 import com.examp.travel.framework.util.PageUtil;
+import com.examp.travel.system.dao.PictureMapper;
 import com.examp.travel.system.dao.SceneryMapper;
 import com.examp.travel.system.dao.SpecialtyMapper;
 import com.examp.travel.system.model.Collect;
 import com.examp.travel.system.dao.CollectMapper;
+import com.examp.travel.system.model.Picture;
 import com.examp.travel.system.model.Scenery;
 import com.examp.travel.system.model.Specialty;
 import com.examp.travel.system.service.ICollectService;
@@ -39,15 +41,25 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     @Resource
     SpecialtyMapper specialtyMapper;
 
+    @Resource
+    PictureMapper pictureMapper;
+
     public List<Collect> findByCollectList(List<Collect> collectList) {
-
-
         return collectList;
     }
 
     @Override
-    public Response findByUserId(Integer collectId) {
-        List<Collect> collectList = collectMapper.findByUserId(collectId);
+    public Response check(Collect collect) {
+        Collect oneCollect = collectMapper.getOneCollect(collect.getType(), collect.getUserId(), collect.getObjectId());
+        if (oneCollect != null) {
+            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+        }
+        return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
+    }
+
+    @Override
+    public Response findByUserId(Integer userId) {
+        List<Collect> collectList = collectMapper.findByUserId(userId);
         if (collectList.isEmpty()) {
             return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
@@ -55,11 +67,17 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
             if (collect.getType().equals("scenery")) {
                 Scenery scenery = sceneryMapper.findScenery(collect.getObjectId());
                 if (scenery != null) {
+                    List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), scenery.getSceneryId());
+                    scenery.setPictureList(pictureList);
                     collect.setScenery(scenery);
                 }
             }else if (collect.getType().equals("specialty")) {
                 Specialty specialty = specialtyMapper.findById(collect.getObjectId());
-                collect.setSpecialty(specialty);
+                if (specialty != null) {
+                    List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), specialty.getSpecialtyId());
+                    specialty.setPictureList(pictureList);
+                    collect.setSpecialty(specialty);
+                }
             }
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),collectList);
@@ -76,7 +94,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         //Integer stock = collect.getStock();
         String keyId = tableName + "_id";
         //查询收藏记录是否存在
-        Collect stockCollect = collectMapper.findByUserIdAndObjectId(collect.getUserId(), collect.getObjectId());
+        Collect stockCollect = collectMapper.getOneCollect(tableName,collect.getUserId(), collect.getObjectId());
         //不存在，则新增
         if (stockCollect == null) {
             collectMapper.update(tableName, keyId, 1, collect.getObjectId());

@@ -22,8 +22,9 @@ public interface PictureMapper extends BaseMapper<Picture> {
     /**根据实体Id查询图片集合**/
     @Select("select picture_id, type, entity_id, picture_base64, path " +
             "from picture " +
-            "where entity_id = #{entity_id}")
-    List<Picture> findAllByEntityId(@Param("entity_id") Integer entityId);
+            "where entity_id = #{entity_id} " +
+            "and type = #{type}")
+    List<Picture> findAllByEntityId(@Param("type") String type, @Param("entity_id") Integer entityId);
 
     /**根据实体Id删除图片集合**/
     @Delete("delete from picture where entity_id = #{entity_id}")

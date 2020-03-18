@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface IPictureService  {
 
-    List<Picture> findAllByEntityId(Integer entityId);
+    List<Picture> findAllByEntityId(String type, Integer entityId);
 
     Response deleteByEntityId(Integer entityId);
 

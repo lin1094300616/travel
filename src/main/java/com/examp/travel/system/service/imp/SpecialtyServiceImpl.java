@@ -46,7 +46,7 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
         }
         for (Specialty specialty : specialtyList
         ) {
-            List<Picture> pictureList = pictureMapper.findAllByEntityId(specialty.getSpecialtyId().intValue());
+            List<Picture> pictureList = pictureMapper.findAllByEntityId("specialty", specialty.getSpecialtyId().intValue());
             specialty.setPictureList(pictureList);
         }
         return specialtyList;
