@@ -78,7 +78,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
                     specialty.setPictureList(pictureList);
                     collect.setSpecialty(specialty);
                 }
-            }
+            }//攻略模块查询时附带图片
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),collectList);
     }
@@ -113,7 +113,6 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     }
 
     @Override
-
     public Response add(Collect collect) {
         if (collectMapper.add(collect) == 1) {
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());

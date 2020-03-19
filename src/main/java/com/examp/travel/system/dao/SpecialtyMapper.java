@@ -26,7 +26,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * @param userId
      * @return
      */
-    @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
+    @Select("SELECT * " +
             "from specialty " +
             "where user_id = #{userId} ")
     List<Specialty> findAllByUserId(@Param("userId")Integer userId);
@@ -36,7 +36,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * @param name
      * @return
      */
-    @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
+    @Select("SELECT * " +
             "from specialty " +
             "where name like '%${value}%'  ")
     List<Specialty> findAllByName(String name);
@@ -46,17 +46,19 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * @param name
      * @return
      */
-    @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
+    @Select("SELECT * " +
             "from specialty " +
             "where name = #{name}")
     Specialty findByName(@Param("name") String name);
 
     /**
+     *
      * 新增
      * @param specialty
      * @return
      */
-    @Insert("INSERT INTO `specialty` VALUES (#{specialtyId}, #{name}, #{type}, #{introduce}, #{address}, #{phone}, #{price}, #{openingTime}, #{userId})")
+    @Insert("INSERT INTO `specialty` VALUES (#{specialtyId}, #{name}, #{type}, #{introduce}, " +
+            "#{address}, #{phone}, #{consumption}, #{openingTime}, #{userId}, #{stock})")
     @Options(useGeneratedKeys = true, keyColumn = "specialtyId", keyProperty = "specialtyId")
     int add(Specialty specialty);
 
@@ -65,8 +67,9 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * @param specialty
      * @return
      */
-    @Update("update specialty set name = #{name}, type = #{type}, introduce = #{introduce},  address = #{address}, " +
-            "phone = #{phone}, price = #{price}, opening_time = #{openingTime}, user_id = #{userId} " +
+    @Update("update specialty set name = #{name}, type = #{type}, introduce = #{introduce}, " +
+            "address = #{address}, phone = #{phone}, consumption = #{consumption}, " +
+            "opening_time = #{openingTime}, user_id = #{userId}, stock = #{stock} " +
             "where specialty_id = #{specialtyId}")
     int update(Specialty specialty);
 
@@ -83,7 +86,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * @param specialtyId
      * @return
      */
-    @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
+    @Select("SELECT * " +
             "from specialty " +
             "where specialty_id = #{specialtyId}")
     Specialty findById(@Param("specialtyId") Integer specialtyId);
@@ -92,7 +95,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * 查询全部
      * @return
      */
-    @Select("SELECT specialty_id, name, type, introduce, address, phone, price, opening_time, user_id " +
+    @Select("SELECT * " +
             "FROM specialty")
     List<Specialty> findAll();
 }

@@ -1,5 +1,6 @@
 package com.examp.travel.system.model;
 
+import com.examp.travel.system.model.Picture;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -52,14 +53,21 @@ public class Specialty  {
     /**
      * 价格
      */
-    private Integer price;
+    private String consumption;
     /**
      * 开放时间
      */
     private String openingTime;
 
-    /**用户编号**/
+    /**
+     * 用户编号
+     */
     private Long userId;
+
+    /**
+     * 收藏
+     */
+    private Integer stock = 0;
 
     /**
      * 关联图片集合
@@ -114,12 +122,12 @@ public class Specialty  {
         this.phone = phone;
     }
 
-    public Integer getPrice() {
-        return price;
+    public String getConsumption() {
+        return consumption;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setConsumption(String consumption) {
+        this.consumption = consumption;
     }
 
     public String getOpeningTime() {
@@ -144,5 +152,13 @@ public class Specialty  {
 
     public void setPictureList(List<Picture> pictureList) {
         this.pictureList = pictureList;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

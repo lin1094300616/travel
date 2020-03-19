@@ -97,7 +97,7 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
         Scenery scenery = sceneryMapper.findScenery(sceneryId);
         if (scenery != null && scenery.getSceneryId() > 0) {
             scenery.setPictureList(pictureMapper.findAllByEntityId(
-                    scenery.getType(), scenery.getSceneryId().intValue()));
+                    "scenery", scenery.getSceneryId().intValue()));
         }
         return scenery;
     }
@@ -111,12 +111,13 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
     public List<Scenery> findWrapper(Map<String, String> queryMap) {
         QueryWrapper<Scenery> queryWrapper = PageUtil.getQueryWrapper(queryMap);
         List<Scenery> sceneryList = sceneryMapper.getAll(queryWrapper);
-        for (Scenery scenery : sceneryList
-        ) {
-            List<Picture> pictureList = pictureMapper.findAllByEntityId(
-                    scenery.getType(),
-                    scenery.getSceneryId().intValue());
-            scenery.setPictureList(pictureList);
+        if (!sceneryList.isEmpty()) {
+            for (Scenery scenery : sceneryList) {
+                List<Picture> pictureList = pictureMapper.findAllByEntityId(
+                        "scenery",
+                        scenery.getSceneryId());
+                scenery.setPictureList(pictureList);
+            }
         }
         return sceneryList;
     }

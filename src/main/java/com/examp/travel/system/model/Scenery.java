@@ -1,5 +1,6 @@
 package com.examp.travel.system.model;
 
+import com.examp.travel.system.model.Picture;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

@@ -91,7 +91,12 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
 
     @Override
     public Specialty findById(Integer specialtyId) {
-        return specialtyMapper.findById(specialtyId);
+
+        Specialty specialty = specialtyMapper.findById(specialtyId);
+        specialty.setPictureList(pictureMapper.findAllByEntityId(
+                "specialty",
+                specialty.getSpecialtyId()));
+        return specialty;
     }
 
     @Override
@@ -102,6 +107,17 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
     @Override
     public List<Specialty> findWrapper(Map<String, String> queryMap) {
         QueryWrapper<Specialty> queryWrapper = PageUtil.getQueryWrapper(queryMap);
-        return specialtyMapper.getAll(queryWrapper);
+        List<Specialty> specialtyList = specialtyMapper.getAll(queryWrapper);
+        if (specialtyList.isEmpty()) {
+            return specialtyList;
+        }
+        for (Specialty specialty : specialtyList
+        ) {
+            List<Picture> pictureList = pictureMapper.findAllByEntityId(
+                    "specialty",
+                    specialty.getSpecialtyId());
+            specialty.setPictureList(pictureList);
+        }
+        return specialtyList;
     }
 }

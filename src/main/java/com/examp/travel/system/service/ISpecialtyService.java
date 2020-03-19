@@ -2,7 +2,6 @@ package com.examp.travel.system.service;
 
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.system.model.Specialty;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 import java.util.Map;
