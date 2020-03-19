@@ -79,7 +79,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * @return
      */
     @Delete("delete from specialty where specialty_id = #{specialtyId}")
-    int deleteById(Integer specialtyId);
+    int delete(Integer specialtyId);
 
     /**
      * 按ID查询

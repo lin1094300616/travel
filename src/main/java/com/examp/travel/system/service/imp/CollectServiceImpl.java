@@ -4,14 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
 import com.examp.travel.framework.util.PageUtil;
-import com.examp.travel.system.dao.PictureMapper;
-import com.examp.travel.system.dao.SceneryMapper;
-import com.examp.travel.system.dao.SpecialtyMapper;
-import com.examp.travel.system.model.Collect;
-import com.examp.travel.system.dao.CollectMapper;
-import com.examp.travel.system.model.Picture;
-import com.examp.travel.system.model.Scenery;
-import com.examp.travel.system.model.Specialty;
+import com.examp.travel.system.dao.*;
+import com.examp.travel.system.model.*;
 import com.examp.travel.system.service.ICollectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -40,6 +34,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
 
     @Resource
     SpecialtyMapper specialtyMapper;
+
+    @Resource
+    FoodMapper foodMapper;
 
     @Resource
     PictureMapper pictureMapper;
@@ -78,7 +75,17 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
                     specialty.setPictureList(pictureList);
                     collect.setSpecialty(specialty);
                 }
-            }//攻略模块查询时附带图片
+            }else if(collect.getType().equals("food")) {
+                Food food = foodMapper.findFood(collect.getObjectId());
+                if (food != null) {
+                    List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), food.getFoodId());
+                    food.setPictureList(pictureList);
+                    collect.setFood(food);
+                }
+            }
+            //攻略模块查询时附带图片
+
+
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),collectList);
     }

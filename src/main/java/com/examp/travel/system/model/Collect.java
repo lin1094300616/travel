@@ -48,6 +48,8 @@ public class Collect implements Serializable {
 
     private Specialty specialty;
 
+    private Food food;
+
     public Integer getCollectId() {
         return collectId;
     }
@@ -94,5 +96,13 @@ public class Collect implements Serializable {
 
     public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
+    }
+
+    public Food getFood() {
+        return food;
+    }
+
+    public void setFood(Food food) {
+        this.food = food;
     }
 }

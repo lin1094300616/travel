@@ -82,7 +82,7 @@ public class SpecialtyServiceImpl extends ServiceImpl<SpecialtyMapper, Specialty
         if (specialtyMapper.findById(specialtyId) == null) {
             return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
-        if(specialtyMapper.deleteById(specialtyId) == 1) {
+        if(specialtyMapper.delete(specialtyId) == 1) {
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
         }else {
             return  Response.factoryResponse(StatusEnum.RET_INSERT_FAIL.getCode(),StatusEnum.RET_INSERT_FAIL.getData());
