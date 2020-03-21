@@ -27,24 +27,24 @@ public interface SceneryMapper extends BaseMapper<Scenery> {
     @Select("select * from scenery ${ew.customSqlSegment}")
     List<Scenery> getAll(@Param(Constants.WRAPPER) QueryWrapper wrapper);
 
-    @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
+    @Select("select * " +
             "from scenery " +
             "where name like '%${value}%'  ")
     List<Scenery> findAllByName(String name);
 
-    @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
+    @Select("select * " +
             "from scenery " +
             "where name like '%${value}%' " +
             "and location = #{location}")
     List<Scenery> findAllByNameAndLocation(@Param(value = "value") String name,@Param(value = "location")String location);
 
     /**2020-02-11**/
-    @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
+    @Select("select * " +
             "from scenery " +
             "where name = #{name}")
     Scenery findByName(@Param("name") String name);
 
-    @Insert("INSERT INTO `scenery` VALUES (#{sceneryId}, #{name}, #{location}, #{level}, #{type}, #{introduce}, #{ticketPrice}, #{openingTime}, #{phone}, #{address}, #{traffic}, #{ticket}, #{stock})")
+    @Insert("INSERT INTO `scenery` VALUES (#{sceneryId}, #{name}, #{location}, #{level}, #{type}, #{introduce}, #{ticketPrice}, #{openingTime}, #{phone}, #{address}, #{traffic}, #{ticket}, #{stock}, #{commentStock})")
     @Options(useGeneratedKeys = true, keyColumn = "sceneryId", keyProperty = "sceneryId")
     int add(Scenery scenery);
 
@@ -58,12 +58,12 @@ public interface SceneryMapper extends BaseMapper<Scenery> {
     @Delete("delete from scenery where scenery_id = #{scenery_id}")
     int delete(Integer sceneryId);
 
-    @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
+    @Select("select * " +
             "from scenery " +
             "where scenery_id = #{scenery_id}")
     Scenery findScenery(@Param("scenery_id") Integer sceneryId);
 
-    @Select("select scenery_id, name, location, level, type, introduce, ticket_price, opening_time, phone, address, traffic, ticket " +
+    @Select("select * " +
             "from scenery")
     List<Scenery> findSceneryList();
 

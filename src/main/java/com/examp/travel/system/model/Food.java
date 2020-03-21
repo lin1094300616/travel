@@ -82,6 +82,11 @@ public class Food implements Serializable {
      */
     private Integer stock;
 
+    /**
+     * 评论数
+     */
+    private Integer commentStock = 0;
+
     private List<Picture> pictureList;
 
     public Integer getFoodId() {
@@ -186,5 +191,13 @@ public class Food implements Serializable {
 
     public void setPictureList(List<Picture> pictureList) {
         this.pictureList = pictureList;
+    }
+
+    public Integer getCommentStock() {
+        return commentStock;
+    }
+
+    public void setCommentStock(Integer commentStock) {
+        this.commentStock = commentStock;
     }
 }

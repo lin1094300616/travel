@@ -41,15 +41,11 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     @Resource
     PictureMapper pictureMapper;
 
-    public List<Collect> findByCollectList(List<Collect> collectList) {
-        return collectList;
-    }
-
     @Override
     public Response check(Collect collect) {
         Collect oneCollect = collectMapper.getOneCollect(collect.getType(), collect.getUserId(), collect.getObjectId());
         if (oneCollect != null) {
-            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),oneCollect);
         }
         return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
     }
@@ -151,7 +147,6 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     @Override
     public List<Collect> findWrapper(Map<String, String> queryMap) {
         QueryWrapper<Collect> queryWrapper = PageUtil.getQueryWrapper(queryMap);
-
         return collectMapper.getAll(queryWrapper);
     }
 }

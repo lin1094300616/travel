@@ -58,7 +58,7 @@ public interface SpecialtyMapper extends BaseMapper<Specialty> {
      * @return
      */
     @Insert("INSERT INTO `specialty` VALUES (#{specialtyId}, #{name}, #{type}, #{introduce}, " +
-            "#{address}, #{phone}, #{consumption}, #{openingTime}, #{userId}, #{stock})")
+            "#{address}, #{phone}, #{consumption}, #{openingTime}, #{userId}, #{stock}, #{commentStock})")
     @Options(useGeneratedKeys = true, keyColumn = "specialtyId", keyProperty = "specialtyId")
     int add(Specialty specialty);
 

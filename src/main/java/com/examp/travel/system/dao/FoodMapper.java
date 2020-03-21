@@ -59,7 +59,8 @@ public interface FoodMapper extends BaseMapper<Food> {
      * @return
      */
     @Insert("INSERT INTO `food` VALUES (#{foodId}, #{name}, #{type}, #{area},  #{introduce}, " +
-            "#{address}, #{phone}, #{consumption}, #{traffic}, #{openingTime}, #{userId}, #{stock})")
+            "#{address}, #{phone}, #{consumption}, #{traffic}, #{openingTime}, #{userId}, " +
+            "#{stock}, #{commentStock})")
     @Options(useGeneratedKeys = true, keyColumn = "foodId", keyProperty = "foodId")
     int add(Food food);
 

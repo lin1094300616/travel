@@ -78,6 +78,11 @@ public class Scenery implements Serializable {
      */
     private Integer stock = 0;
 
+    /**
+     * 评论数
+     */
+    private Integer commentStock = 0;
+
     private List<Picture> pictureList;
 
     public Integer getSceneryId() {
@@ -190,5 +195,13 @@ public class Scenery implements Serializable {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Integer getCommentStock() {
+        return commentStock;
+    }
+
+    public void setCommentStock(Integer commentStock) {
+        this.commentStock = commentStock;
     }
 }
