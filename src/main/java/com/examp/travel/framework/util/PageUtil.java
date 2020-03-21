@@ -32,12 +32,10 @@ public class PageUtil {
             if (mapKey.endsWith("_like")) {
                 //写入之前先去除后缀的_like
                 queryWrapper.like(mapKey.substring(0,mapKey.length()-5),mapValue);
-            }else if (mapKey.endsWith("_order_by")){ //包含 _order_by 表示需要排序
-                if (mapValue.equals("desc")) { //降序
-                    queryWrapper.orderByDesc(mapKey.substring(0,mapKey.length()-9));
-                }else { //升序
-                    queryWrapper.orderByAsc(mapKey.substring(0,mapKey.length()-9));
-                }
+            }else if (mapKey.endsWith("asc")){ //包含 asc 表示升序
+                queryWrapper.orderByAsc(mapValue);
+            }else if (mapKey.endsWith("desc")) {
+                queryWrapper.orderByDesc(mapValue);
             }else if ((mapValue == null) || (mapValue.equals(""))) {
                 //如果不是模糊查询，且value 为null 或 "", 不添加查询条件
                 continue;
