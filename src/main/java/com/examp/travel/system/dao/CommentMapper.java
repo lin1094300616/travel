@@ -62,7 +62,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
     List<Comment> findByUserId(@Param("userId") Integer userId);
 
     @Insert("INSERT INTO `comment` VALUES (#{commentId}, #{commentName}, " +
-            "#{commentContent}, #{score}, #{type}, #{userId}, #{objectId} )")
+            "#{commentContent}, #{score}, #{type}, #{userId}, #{userName}, #{objectId} )")
     @Options(useGeneratedKeys = true, keyColumn = "commentId", keyProperty = "commentId")
     int add(Comment comment);
 

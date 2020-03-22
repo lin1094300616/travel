@@ -7,13 +7,11 @@ import com.examp.travel.framework.util.PageUtil;
 import com.examp.travel.system.dao.FoodMapper;
 import com.examp.travel.system.dao.SceneryMapper;
 import com.examp.travel.system.dao.SpecialtyMapper;
-import com.examp.travel.system.model.Comment;
+import com.examp.travel.system.model.*;
 import com.examp.travel.system.dao.CommentMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.examp.travel.system.model.Food;
-import com.examp.travel.system.model.Scenery;
-import com.examp.travel.system.model.Specialty;
 import com.examp.travel.system.service.ICommentService;
+import com.examp.travel.system.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,6 +40,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Resource
     FoodMapper foodMapper;
+
+    @Resource
+    UserService userService;
 
 
     /**
@@ -91,10 +92,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         if (!check(comment.getType(),comment.getObjectId())) {
             return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),"评论类型错误或目标不存在");
         }
-        Comment oneComment = commentMapper.getOneComment(comment.getType(), comment.getUserId(), comment.getObjectId());
-        if (oneComment != null) {
-            return  Response.factoryResponse(StatusEnum.RET_INSERT_EXIST.getCode(),"您已经做出过评论，请评论其他");
+        User user = userService.findUser(comment.getUserId());
+        if (user == null) {
+            return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(), "用户类型错误，请重新输入");
         }
+        comment.setUserName(user.getUserName());
         if (commentMapper.add(comment) == 1) {
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
         }

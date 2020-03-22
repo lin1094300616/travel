@@ -51,6 +51,11 @@ public class Comment implements Serializable {
     private Integer userId;
 
     /**
+     * 用户姓名
+     */
+    private String userName;
+
+    /**
      * 评论对象ID
      */
     private Integer objectId;
@@ -101,6 +106,14 @@ public class Comment implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Integer getObjectId() {
