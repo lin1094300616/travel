@@ -1,5 +1,6 @@
 package com.examp.travel.system.service.imp;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,34 +58,42 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         if (collectList.isEmpty()) {
             return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
+
+        List<Scenery> sceneryList = new ArrayList<>();
+        List<Specialty> specialtyList = new ArrayList<>();
+        List<Food> foodList = new ArrayList<>();
         for (Collect collect : collectList) {
             if (collect.getType().equals("scenery")) {
                 Scenery scenery = sceneryMapper.findScenery(collect.getObjectId());
                 if (scenery != null) {
                     List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), scenery.getSceneryId());
                     scenery.setPictureList(pictureList);
-                    collect.setScenery(scenery);
+                    sceneryList.add(scenery);
                 }
             }else if (collect.getType().equals("specialty")) {
                 Specialty specialty = specialtyMapper.findById(collect.getObjectId());
                 if (specialty != null) {
                     List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), specialty.getSpecialtyId());
                     specialty.setPictureList(pictureList);
-                    collect.setSpecialty(specialty);
+                    specialtyList.add(specialty);
                 }
             }else if(collect.getType().equals("food")) {
                 Food food = foodMapper.findFood(collect.getObjectId());
                 if (food != null) {
                     List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), food.getFoodId());
                     food.setPictureList(pictureList);
-                    collect.setFood(food);
+                    foodList.add(food);
                 }
             }
             //攻略模块查询时附带图片
 
-
         }
-        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),collectList);
+        JSONObject jsonArray = new JSONObject();
+        jsonArray.put("collectList",collectList);
+        jsonArray.put("sceneryList",sceneryList);
+        jsonArray.put("specialtyList",specialtyList);
+        jsonArray.put("foodList",foodList);
+        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),jsonArray);
     }
 
     /**
