@@ -18,7 +18,7 @@ public interface IPictureService  {
 
     List<Picture> findAllByEntityId(String type, Integer entityId);
 
-    Response deleteByEntityId(Integer entityId);
+//    Response deleteByEntityId(Integer entityId);
 
     Response add(Picture picture);
 

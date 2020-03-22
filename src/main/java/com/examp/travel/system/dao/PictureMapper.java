@@ -27,8 +27,10 @@ public interface PictureMapper extends BaseMapper<Picture> {
     List<Picture> findAllByEntityId(@Param("type") String type, @Param("entity_id") Integer entityId);
 
     /**根据实体Id删除图片集合**/
-    @Delete("delete from picture where entity_id = #{entity_id}")
-    int deleteByEntityId(Integer entityId);
+    @Delete("delete from picture " +
+            "where type = #{type} " +
+            "and entity_id = #{entity_id}")
+    int deleteByEntityId(@Param("type") String type, @Param("entity_id") Integer entityId);
 
     @Insert("INSERT INTO `picture` VALUES (#{pictureId}, #{type}, #{entityId}, #{pictureBase64}, #{path})")
     @Options(useGeneratedKeys = true, keyColumn = "pictureId", keyProperty = "pictureId")

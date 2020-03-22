@@ -84,6 +84,7 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food> implements IF
             return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
         if(foodMapper.delete(foodId) == 1) {
+            pictureMapper.deleteByEntityId("food", foodId);
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
         }else {
             return  Response.factoryResponse(StatusEnum.RET_INSERT_FAIL.getCode(),StatusEnum.RET_INSERT_FAIL.getData());

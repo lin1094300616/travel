@@ -85,7 +85,7 @@ public class SceneryServiceImpl extends ServiceImpl<SceneryMapper, Scenery> impl
             return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
         if(sceneryMapper.delete(sceneryId) == 1) {
-            pictureMapper.deleteByEntityId(sceneryId.intValue());
+            pictureMapper.deleteByEntityId("scenery", sceneryId);
             return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
         }else {
             return  Response.factoryResponse(StatusEnum.RET_INSERT_FAIL.getCode(),StatusEnum.RET_INSERT_FAIL.getData());

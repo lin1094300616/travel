@@ -31,13 +31,13 @@ public class PictureServiceImpl  implements IPictureService {
         return pictureMapper.findAllByEntityId(type,entityId);
     }
 
-    @Override
-    public Response deleteByEntityId(Integer entityId) {
-        if (pictureMapper.deleteByEntityId(entityId) > 0) {
-            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
-        }
-        return  Response.factoryResponse(StatusEnum.RET_DELETE_FAIL.getCode(),StatusEnum.RET_DELETE_FAIL.getData());
-    }
+//    @Override
+//    public Response deleteByEntityId(Integer entityId) {
+//        if (pictureMapper.deleteByEntityId(entityId) > 0) {
+//            return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+//        }
+//        return  Response.factoryResponse(StatusEnum.RET_DELETE_FAIL.getCode(),StatusEnum.RET_DELETE_FAIL.getData());
+//    }
 
     @Override
     public Response add(Picture picture) {
