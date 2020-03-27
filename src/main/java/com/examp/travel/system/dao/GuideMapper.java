@@ -49,12 +49,14 @@ public interface GuideMapper extends BaseMapper<Guide> {
             "from guide")
     List<Guide> findGuideList();
 
-    @Insert("INSERT INTO `guide` VALUES (#{guideId}, #{title}, #{content}, #{stock}, #{commentStock}, #{userId}, #{userName})")
+    @Insert("INSERT INTO `guide` VALUES (#{guideId}, #{title}, #{content}, #{stock}, " +
+            "#{commentStock}, #{userId}, #{userName}, #{location}, #{introduce}, #{time})")
     @Options(useGeneratedKeys = true, keyColumn = "guideId", keyProperty = "guideId")
     int add(Guide guide);
 
     @Update("update guide set title = #{title}, content = #{content}, stock = #{stock}, " +
-            "commentStock = #{commentStock} " +
+            "commentStock = #{commentStock}, location = #{location}, " +
+            "introduce = #{introduce}, time = #{time} " +
             "where guide_id = #{guideId}")
     int update(Guide guide);
 }

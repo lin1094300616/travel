@@ -58,6 +58,21 @@ public class Guide implements Serializable {
     private String userName;
 
     /**
+     * 地区*
+     */
+    private String location;
+
+    /**
+     * 简介*
+     */
+    private String introduce;
+
+    /**
+     * 时间*
+     */
+    private String time;
+
+    /**
      * 图片
      */
     private List<Picture> pictureList;
@@ -117,6 +132,31 @@ public class Guide implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public List<Picture> getPictureList() {
