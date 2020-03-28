@@ -49,6 +49,7 @@ public interface GuideMapper extends BaseMapper<Guide> {
             "from guide")
     List<Guide> findGuideList();
 
+
     @Insert("INSERT INTO `guide` VALUES (#{guideId}, #{title}, #{content}, #{stock}, " +
             "#{commentStock}, #{userId}, #{userName}, #{location}, #{introduce}, #{time})")
     @Options(useGeneratedKeys = true, keyColumn = "guideId", keyProperty = "guideId")
