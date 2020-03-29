@@ -41,6 +41,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     FoodMapper foodMapper;
 
     @Resource
+    GuideMapper guideMapper;
+
+    @Resource
     PictureMapper pictureMapper;
 
     @Override
@@ -62,6 +65,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         List<Scenery> sceneryList = new ArrayList<>();
         List<Specialty> specialtyList = new ArrayList<>();
         List<Food> foodList = new ArrayList<>();
+        List<Guide> guideList = new ArrayList<>();
         for (Collect collect : collectList) {
             if (collect.getType().equals("scenery")) {
                 Scenery scenery = sceneryMapper.findScenery(collect.getObjectId());
@@ -84,6 +88,13 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
                     food.setPictureList(pictureList);
                     foodList.add(food);
                 }
+            }else if(collect.getType().equals("guide")) {
+                Guide guide = guideMapper.findGuide(collect.getObjectId());
+                if (guide != null) {
+                    List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), guide.getGuideId());
+                    guide.setPictureList(pictureList);
+                    guideList.add(guide);
+                }
             }
             //攻略模块查询时附带图片
 
@@ -92,6 +103,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         jsonArray.put("collectList",collectList);
         jsonArray.put("sceneryList",sceneryList);
         jsonArray.put("specialtyList",specialtyList);
+        jsonArray.put("guideList",guideList);
         jsonArray.put("foodList",foodList);
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),jsonArray);
     }

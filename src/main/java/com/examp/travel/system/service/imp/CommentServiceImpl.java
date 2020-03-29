@@ -4,11 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.examp.travel.framework.entity.Response;
 import com.examp.travel.framework.entity.StatusEnum;
 import com.examp.travel.framework.util.PageUtil;
-import com.examp.travel.system.dao.FoodMapper;
-import com.examp.travel.system.dao.SceneryMapper;
-import com.examp.travel.system.dao.SpecialtyMapper;
+import com.examp.travel.system.dao.*;
 import com.examp.travel.system.model.*;
-import com.examp.travel.system.dao.CommentMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.examp.travel.system.service.ICommentService;
 import com.examp.travel.system.service.UserService;
@@ -42,6 +39,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     FoodMapper foodMapper;
 
     @Resource
+    GuideMapper guideMapper;
+
+    @Resource
     UserService userService;
 
 
@@ -68,6 +68,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             }
             case "food":{
                 if (foodMapper.findFood(objectId) == null) {
+                    return false;
+                }
+                break;
+            }
+            case "guide":{
+                if (guideMapper.findGuide(objectId) == null) {
                     return false;
                 }
                 break;
