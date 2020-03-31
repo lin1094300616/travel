@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public interface IGuideService extends IService<Guide> {
 
+    Response findByUserId(Integer userId);
+
     Response add(Guide guide);
 
     Response update(Guide guide);

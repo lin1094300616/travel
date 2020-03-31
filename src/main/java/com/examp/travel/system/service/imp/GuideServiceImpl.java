@@ -32,7 +32,16 @@ public class GuideServiceImpl extends ServiceImpl<GuideMapper, Guide> implements
 
     @Resource
     PictureMapper pictureMapper;
-    
+
+    @Override
+    public Response findByUserId(Integer userId) {
+        List<Guide> guideList = guideMapper.findByUserId(userId);
+        if (guideList.isEmpty()) {
+            return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
+        }
+        return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),guideList);
+    }
+
     @Override
     public Response add(Guide guide) {
         if(guideMapper.add(guide) == 1) {

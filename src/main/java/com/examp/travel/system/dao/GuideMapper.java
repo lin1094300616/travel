@@ -29,8 +29,8 @@ public interface GuideMapper extends BaseMapper<Guide> {
 
     @Select("select * " +
             "from guide " +
-            "where name like '%${value}%'  ")
-    List<Guide> findAllByName(String name);
+            "where user_id = #{userId}")
+    List<Guide> findByUserId(@Param("userId") Integer userId);
 
     @Select("select * " +
             "from guide " +

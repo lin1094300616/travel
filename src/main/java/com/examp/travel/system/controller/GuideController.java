@@ -55,6 +55,11 @@ public class GuideController {
         return guideService.delete(guideId);
     }
 
+    @GetMapping(value = "userId/{guideId}")
+    public Response findUserid(@PathVariable("guideId") Integer guideId) {
+        return guideService.findByUserId(guideId);
+    }
+
     @GetMapping(value = "/{guideId}")
     public Response getGuideById(@PathVariable("guideId") Integer guideId) {
         Guide guide = guideService.findGuide(guideId);
