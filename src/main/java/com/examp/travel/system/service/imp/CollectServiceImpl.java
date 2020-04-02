@@ -55,28 +55,44 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
     }
 
+    /**
+     * 根据用户Id 获得用户的收藏列表（对不同模块进行分类）
+     * @param userId
+     * @return
+     */
     @Override
     public Response findByUserId(Integer userId) {
+        /**查询用户是否有收藏数据**/
         List<Collect> collectList = collectMapper.findByUserId(userId);
         if (collectList.isEmpty()) {
             return Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
 
+        /**定义收藏类别**/
         List<Scenery> sceneryList = new ArrayList<>();
         List<Specialty> specialtyList = new ArrayList<>();
         List<Food> foodList = new ArrayList<>();
         List<Guide> guideList = new ArrayList<>();
+
+        /**遍历收藏信息，根据收藏类型，查询收藏数据**/
         for (Collect collect : collectList) {
+            /**收藏数据为景点**/
             if (collect.getType().equals("scenery")) {
+                /**查询景点信息**/
                 Scenery scenery = sceneryMapper.findScenery(collect.getObjectId());
+                /**景点不为空**/
                 if (scenery != null) {
+                    /**查询景点关联的图片信息**/
                     List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), scenery.getSceneryId());
                     scenery.setPictureList(pictureList);
                     sceneryList.add(scenery);
                 }
-            }else if (collect.getType().equals("specialty")) {
+            }else if (collect.getType().equals("specialty")) {/**收藏数据为特产**/
+                /**查询特产信息**/
                 Specialty specialty = specialtyMapper.findById(collect.getObjectId());
+                /**特产不为空**/
                 if (specialty != null) {
+                    /**查询特产关联的图片信息**/
                     List<Picture> pictureList = pictureMapper.findAllByEntityId(collect.getType(), specialty.getSpecialtyId());
                     specialty.setPictureList(pictureList);
                     specialtyList.add(specialty);
@@ -99,6 +115,8 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
             //攻略模块查询时附带图片
 
         }
+
+        /**数据整合，将所有结果集整合进JSON对象中，并返回**/
         JSONObject jsonArray = new JSONObject();
         jsonArray.put("collectList",collectList);
         jsonArray.put("sceneryList",sceneryList);
@@ -113,21 +131,22 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
      * @return
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class) /**开启事务，更新操作失败时事务回滚**/
     public Response stock(Collect collect) {
+        /**根据收藏类型，获得表名**/
         String tableName = collect.getType();
-        //Integer stock = collect.getStock();
+        /**使用表名，拼接主键字段名**/
         String keyId = tableName + "_id";
-        //查询收藏记录是否存在
+        /**查询收藏记录是否存在**/
         Collect stockCollect = collectMapper.getOneCollect(tableName,collect.getUserId(), collect.getObjectId());
-        //不存在，则新增
+
+        /**收藏记录不存在，进行新增操作**/
         if (stockCollect == null) {
             collectMapper.update(tableName, keyId, 1, collect.getObjectId());
             if (collectMapper.add(collect) <= 0) {
                 return Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());
             }
-        }else {
-            //存在，则删除
+        }else {/**收藏记录存在，则进行删除操作**/
             collectMapper.update(tableName, keyId, -1, collect.getObjectId());
             if (collectMapper.delete(stockCollect.getCollectId()) <= 0) {
                 return Response.factoryResponse(StatusEnum.RET_UPDATE_FAIL.getCode(),StatusEnum.RET_UPDATE_FAIL.getData());

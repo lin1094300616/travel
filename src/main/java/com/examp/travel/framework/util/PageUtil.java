@@ -34,13 +34,13 @@ public class PageUtil {
                 queryWrapper.like(mapKey.substring(0,mapKey.length()-5),mapValue);
             }else if (mapKey.endsWith("asc")){ //包含 asc 表示升序
                 queryWrapper.orderByAsc(mapValue);
-            }else if (mapKey.endsWith("desc")) {
+            }else if (mapKey.endsWith("desc")) {//包含 desc 表示升序
                 queryWrapper.orderByDesc(mapValue);
             }else if ((mapValue == null) || (mapValue.equals(""))) {
                 //如果不是模糊查询，且value 为null 或 "", 不添加查询条件
                 continue;
             }else {
-                //无Like 且value 不为null 或"" ,则表示该字段精确查询
+                //不是模糊查询和排序，且value 不为 null 或"" ,则表示该字段精确查询
                 queryWrapper.eq(mapKey,mapValue);
             }
         }

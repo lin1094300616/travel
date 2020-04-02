@@ -22,6 +22,14 @@ public interface CollectMapper extends BaseMapper<Collect> {
     @Select("select * from collect ${ew.customSqlSegment}")
     List<Collect> getAll(@Param(Constants.WRAPPER) QueryWrapper wrapper);
 
+    /**
+     * 根据表名和收藏数，对被收藏对象进行收藏数更新
+     * @param tableName 表名
+     * @param keyId 主键名
+     * @param stock 当前收藏数
+     * @param objectId 收藏对象ID
+     * @return
+     */
     @Update("update ${tableName} set stock = stock + #{stock} " +
             "where ${keyId}= #{objectId}")
     int update(@Param("tableName")String tableName,

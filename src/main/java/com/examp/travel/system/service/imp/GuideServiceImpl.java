@@ -39,6 +39,10 @@ public class GuideServiceImpl extends ServiceImpl<GuideMapper, Guide> implements
         if (guideList.isEmpty()) {
             return  Response.factoryResponse(StatusEnum.RET_NOT_DATA_FOUND.getCode(),StatusEnum.RET_NOT_DATA_FOUND.getData());
         }
+        for (Guide guide : guideList) {
+            List<Picture> pictureList = pictureMapper.findAllByEntityId("guide", guide.getGuideId());
+            guide.setPictureList(pictureList);
+        }
         return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),guideList);
     }
 
